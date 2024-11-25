@@ -1,0 +1,196 @@
+body{
+    margin: 0;
+    background-color: rgb(64, 64, 64);
+}
+.ruletaIMG{
+    margin-left: 36.7%;
+    height: 165px;
+}
+.title{
+   text-align: center;
+   background-color: rgb(87, 8, 8);
+   margin-left: 30%;
+   margin-right: 30%;
+   margin-bottom: 3%;
+   border-radius: 10px;
+   padding: 1%;
+   box-shadow: 5px 5px 10px rgb(29, 12, 12);
+}
+    .logo{
+    height: 80px;
+}
+.ruletaTable{
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    height: 310px; 
+    text-align: center;
+    border-collapse: collapse;
+}
+.casillaColumnaTableVERD{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(43, 127, 43);
+    color: white;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+.casillaColumnaTableVERMELL{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    color: white;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+}
+.casillaColumnaTableNEGRE{
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+}
+.ruleta{
+    border: solid 4px rgb(228, 226, 147);
+}
+.monedasTable{
+    margin-top: 1%;
+    margin-left: 25.5%;
+    margin-right: 25.5%;
+    width: 50%;
+    height: 100px; 
+    text-align: center;
+}
+.monedas{
+    width: 30px;
+    height: 30px;
+}
+.fichas{
+    width: 100px;
+    height: 90px;
+    opacity: 40%;
+}
+.fichas:hover{
+    opacity: 60%;
+}
+.fichaSeleccionada {
+   opacity: 100%;
+}
+.fichaEnCelda{
+    width: 50px;
+    height: 50px;
+}
+.menuJoc{
+    background-color: white;
+    border-top: solid rgb(61, 197, 61) 7px;
+}
+.pianoRuleta{
+    padding: 1%;
+    background-color: rgb(61, 197, 61);
+}
+.ruletaTablero{
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 98%;
+    height: 400px; 
+    text-align: center;
+    border-collapse: collapse;
+}
+.casillaFila{
+    border: solid 4px rgb(61, 197, 61);
+}
+.casillaColumnaVERD{
+    border: solid 4px rgb(61, 197, 61);
+    border-radius: 15px;
+    background-color: rgb(43, 127, 43);
+    color: white;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    width: 90px;
+    height: 90px;
+}
+.casillaColumnaVERMELL{
+    border: solid 4px rgb(61, 197, 61);
+    border-radius: 15px;
+    background-color: red;
+    color: white;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    width: 90px;
+    height: 90px;
+}
+.casillaColumnaNEGRE{
+    border: solid 4px rgb(61, 197, 61);
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    width: 90px;
+    height: 90px;
+}
+.botones{
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#limpiar{
+    background-color: rgb(43, 127, 43);
+    height: 65px;
+    width: 160px;
+    border: solid 4px rgb(23, 83, 23);
+    border-radius: 10px;
+}
+#limpiar:hover{
+    background-color: rgb(17, 75, 17);
+    border: solid 4px rgb(16, 58, 16);
+}
+.reiniciar{
+    height: 44px;
+    width: 30%;
+}
+.botonesTabla{
+    margin-left: 24%;
+    width: 50%;
+    height: 40px; 
+    text-align: center;
+    border-collapse: collapse;
+}
+.filaDiners{
+    border: solid 4px rgb(0, 0, 0);
+    background-color: rgb(131, 131, 131);
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    width: 90px;
+    height: 40px;
+}
+.filaDinersDOS{
+    border: solid 4px rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    width: 100px;
+    height: 40px;
+}
+#girarRule{
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: rgb(43, 127, 43);
+    height: 65px;
+    width: 160px;
+    border: solid 4px rgb(23, 83, 23);
+    border-radius: 10px;
+}
+#girarRule:hover{
+    background-color: rgb(17, 75, 17);
+    border: solid 4px rgb(16, 58, 16);
+    
+}
+.pelota{
+    height: 30px;
+    object-fit: contain;
+}
