@@ -89,9 +89,9 @@ function Aposta(cell, fichaValores) {
         const existeixFicha = cell.querySelector('img');  // Comprobar si ya hay una ficha en la celda
         if (!existeixFicha) {
             const img = document.createElement('img');
-            img.src = `/IMG/${selectedFicha.id}.png`;
+            img.src = `IMG/${selectedFicha.id}.png`;
             img.className = 'fichaEnCelda';
-            img.dataset.valor = valorFichaSeleccionada;  // Asegúrate de asociar el valor de la ficha con la imagen.
+            img.dataset.valor = valorFichaSeleccionada;  
             img.onload = () => {
                 cell.appendChild(img);
             };
@@ -133,7 +133,7 @@ function girarRuleta() {
     const randomCell = ruletaCell[randomNum];
 
     const pelotaImg = document.createElement('img');
-    pelotaImg.src = '/IMG/pelota.png';
+    pelotaImg.src = 'IMG/pelota.png';
     pelotaImg.className = 'pelota';
     randomCell.appendChild(pelotaImg);
 
@@ -171,7 +171,7 @@ function iniciarAnimacionRuleta(ruletaCells, indexAleatori, pelotaImg) {
                 if (imgFinal) {
                     imgFinal.remove();
                 }
-            }, 5000);
+            }, 6000);
         } else {
             setTimeout(moverPelota, tempsInterval);
         }
@@ -187,28 +187,31 @@ function guardarNumeroGanador(celda) {
 
 // Función 11 - Comprobar si hay un ganador
 function comprobarGanador() {
-    if (apuestas.includes(numeroGanador)) {
-        alert("Felicitats, has guanyat!");
-        const ruletaCells = document.querySelectorAll('.ruletaTable td');
-        ruletaCells.forEach(cell => {
-        const pelota = cell.querySelector('img.pelota');
-        if (pelota) pelota.remove();
+    // Eliminar todas las fichas apostadas en el tablero de la ruleta
+    const ruletaCellsAposta = document.querySelectorAll('.ruletaTablero td');
+    ruletaCellsAposta.forEach(cell => {
+        const ficha = cell.querySelector('img.fichaEnCelda');
+        if (ficha) {
+            ficha.remove(); // Eliminar la ficha de la celda
+        }
     });
+
+    // Comprobar si el número ganador está en las apuestas
+    const resultadoLabel = document.querySelector('.resultat');
+    if (apuestas.includes(numeroGanador)) {
+        resultadoLabel.classList.add('mostrar');
+        resultadoLabel.textContent = "Has guanyat!";
+        
+
+        setTimeout(() => {
+            resultadoLabel.classList.remove('mostrar');
+        }, 5000);
     } 
-    
-     // Eliminar todas las fichas apostadas en el tablero de la ruleta
-     const ruletaCellsAposta = document.querySelectorAll('.ruletaTablero td');
-     ruletaCellsAposta.forEach(cell => {
-         const ficha = cell.querySelector('img.fichaEnCelda');
-         if (ficha) {
-             ficha.remove();// Eliminar la ficha de la celda
-         }
-     });
- 
-     // Limpiar las apuestas (también podría ser parte de la lógica de reset)
-     apuestas = [];
-     DineroLabelAposta.textContent = "0";
- }
+    // Limpiar las apuestas 
+    apuestas = [];
+    DineroLabelAposta.textContent = "0";
+}
+
 
 
 // Función 12 - Inicializar el juego
