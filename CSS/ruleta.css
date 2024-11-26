@@ -8,7 +8,7 @@ body{
 }
 .title{
    text-align: center;
-   background-color: rgb(87, 8, 8);
+   background-color: rgb(94, 0, 33);
    margin-left: 30%;
    margin-right: 30%;
    margin-bottom: 3%;
@@ -16,7 +16,7 @@ body{
    padding: 1%;
    box-shadow: 5px 5px 10px rgb(29, 12, 12);
 }
-    .logo{
+.logo{
     height: 80px;
 }
 .ruletaTable{
@@ -51,6 +51,15 @@ body{
     font-size: 25px;
     font-family: Arial, sans-serif;
 }
+.casillaColumnaTableMEGAFIRE{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(254, 164, 60);
+    color: white;
+    font-size: 36px;
+    font-family: Arial, sans-serif;
+    border: solid 6px rgb(237, 95, 44);    
+}
 .ruleta{
     border: solid 4px rgb(228, 226, 147);
 }
@@ -70,6 +79,7 @@ body{
     width: 100px;
     height: 90px;
     opacity: 40%;
+    transition: all 0.5s ease 0s;
 }
 .fichas:hover{
     opacity: 60%;
@@ -141,10 +151,14 @@ body{
     width: 160px;
     border: solid 4px rgb(23, 83, 23);
     border-radius: 10px;
+    transition: all 0.5s ease 0s;
 }
 #limpiar:hover{
     background-color: rgb(17, 75, 17);
     border: solid 4px rgb(16, 58, 16);
+}
+#limpiar:active{
+    background-color: rgb(11, 49, 11);
 }
 .reiniciar{
     height: 44px;
@@ -184,13 +198,17 @@ body{
     width: 160px;
     border: solid 4px rgb(23, 83, 23);
     border-radius: 10px;
+    transition: all 0.5s ease 0s;
 }
 #girarRule:hover{
     background-color: rgb(17, 75, 17);
     border: solid 4px rgb(16, 58, 16);
     
 }
+#girarRule:active{
+    background-color: rgb(11, 49, 11);
+}
 .pelota{
-    height: 30px;
+    height: 27px;
     object-fit: contain;
 }

@@ -1,15 +1,20 @@
 "use strict";
 
-//Variables dels diners
+// Variables
 let dinero = null;
 let saldoInicial = null;
+const Negros = ["2", "4", "6", "8", "10", "11", "13", "15", "17", "19", "21", "23", "25", "27", "30", "32", "34", "36"];
+const Rojos = ["1", "3", "5", "7", "9", "12", "14", "16", "18", "20", "22", "24", "26", "28", "29", "31", "33", "35"];
 
-//Definir les etiquetes on es guarden els valors dels diners
+let numeroGanador = null; 
+let apuestas = [];
+
+// Definir las etiquetas donde se guardan los valores de dinero
 const DineroLabel = document.getElementById("dinersActual");
 const DineroLabelAposta = document.getElementById("apostaActual");
 DineroLabelAposta.textContent = "0";
 
-//Funció 1 - Solicitar els diners
+// Función 1 - Solicitar el saldo inicial
 function solicitarSaldoInicial() {
     while (true) {
         dinero = prompt("Quants diners vols ingresar?");
@@ -30,7 +35,7 @@ function solicitarSaldoInicial() {
     }
 }
 
-//Funció 2 - Poder seleccionar fitxes
+// Función 2 - Inicializar selección de fichas
 function inicializarSeleccionFichas(fichaValores) {
     const fichas = document.querySelectorAll('.fichas');
     fichas.forEach(ficha => {
@@ -40,14 +45,14 @@ function inicializarSeleccionFichas(fichaValores) {
     });
 }
 
-//Funció 3 - Cambiar de fitxa i guardar el seu valor
+// Función 3 - Cambiar de ficha y guardar su valor
 function seleccionarFicha(ficha, fichas, fichaValores) {
     fichas.forEach(f => f.classList.remove('fichaSeleccionada'));
     ficha.classList.add('fichaSeleccionada');
     ficha.dataset.valor = fichaValores[ficha.id];
 }
 
-//Funció 4 - Configuració cel·les taula
+// Función 4 - Inicializar celdas de la ruleta
 function inicializarCeldasRuleta(fichaValores) {
     const ruletaCells = document.querySelectorAll('.ruletaTablero td');
     ruletaCells.forEach(cell => {
@@ -55,44 +60,74 @@ function inicializarCeldasRuleta(fichaValores) {
     });
 }
 
-//Funció 5 - Colocar fitxa a la cel·la
+//Función 5 - Colocar ficha en la celda y registrar apuesta
 function Aposta(cell, fichaValores) {
     const selectedFicha = document.querySelector('.fichaSeleccionada');
-    if (!selectedFicha) return;
-    const valorFicha = parseFloat(selectedFicha.dataset.valor);
+    if (!selectedFicha) return;  // Si no hay ficha seleccionada, no hacer nada.
+
     const saldoActual = parseFloat(DineroLabel.textContent);
     const apuestaActual = parseFloat(DineroLabelAposta.textContent);
 
-    if (saldoActual >= valorFicha) {
-        const existeixFicha = cell.querySelector('img');
+    const valorFichaSeleccionada = parseFloat(selectedFicha.dataset.valor);  // Valor de la ficha seleccionada.
+    
+    // Si ya hay una ficha en la celda, eliminarla y devolver el dinero
+    const existeixFicha = cell.querySelector('img.fichaEnCelda');
+    if (existeixFicha) {
+        const valorFichaEnCelda = parseFloat(existeixFicha.dataset.valor);  // Valor de la ficha ya existente en la celda.
+        
+        // Eliminar la ficha de la celda
+        cell.removeChild(existeixFicha);
+        
+        // Devolver el dinero al saldo
+        DineroLabel.textContent = (saldoActual + valorFichaEnCelda).toFixed(2);
+        DineroLabelAposta.textContent = (apuestaActual - valorFichaEnCelda).toFixed(2);
+        return;
+    }
+
+    // Si el saldo es suficiente para apostar la ficha seleccionada
+    if (saldoActual >= valorFichaSeleccionada) {
+        const existeixFicha = cell.querySelector('img');  // Comprobar si ya hay una ficha en la celda
         if (!existeixFicha) {
             const img = document.createElement('img');
             img.src = `/IMG/${selectedFicha.id}.png`;
             img.className = 'fichaEnCelda';
+            img.dataset.valor = valorFichaSeleccionada;  // Asegúrate de asociar el valor de la ficha con la imagen.
             img.onload = () => {
                 cell.appendChild(img);
             };
-            DineroLabel.textContent = (saldoActual - valorFicha).toFixed(2);
-            DineroLabelAposta.textContent = (apuestaActual + valorFicha).toFixed(2);
+
+            // Actualizar el saldo y las apuestas
+            DineroLabel.textContent = (saldoActual - valorFichaSeleccionada).toFixed(2);
+            DineroLabelAposta.textContent = (apuestaActual + valorFichaSeleccionada).toFixed(2);
+
+            // Registrar la apuesta
+            registrarApuesta(cell); 
         }
     } else {
         alert("No tens prou saldo per apostar aquesta fitxa.");
     }
 }
 
-//Funció 6 - Reiniciar Apuesta
+// Función 6 - Registrar el número apostado
+function registrarApuesta(celda) {
+    const numero = celda.textContent.trim();
+    if (!apuestas.includes(numero)) {
+        apuestas.push(numero);
+    }
+}
+
+// Función 7 - Limpiar apuestas
 function limpiarApuestas() {
     const fichasCeldas = document.querySelectorAll('.ruletaTablero td img');
     fichasCeldas.forEach(ficha => ficha.remove());
 
+    apuestas = [];
     DineroLabel.textContent = saldoInicial.toFixed(2);
     DineroLabelAposta.textContent = "0";
 }
 
-//Funció 7 - Inicia animació de girar la ruleta
+// Función 8 - Girar la ruleta y determinar el número ganador
 function girarRuleta() {
-    const fichasCeldas = document.querySelectorAll('.ruletaTablero td img');
-    fichasCeldas.forEach(ficha => ficha.remove());
     const ruletaCell = document.querySelectorAll('.ruletaTable td');
     const randomNum = Math.floor(Math.random() * ruletaCell.length);
     const randomCell = ruletaCell[randomNum];
@@ -105,14 +140,14 @@ function girarRuleta() {
     iniciarAnimacionRuleta(ruletaCell, randomNum, pelotaImg);
 }
 
-//Funció 8 - Moviment de la pilota
+// Función 9 - Iniciar animación de la ruleta
 function iniciarAnimacionRuleta(ruletaCells, indexAleatori, pelotaImg) {
-    const numMovimientos = Math.floor(Math.random() * (170 - 50 + 1)) + 50;
+    const numMovimientos = Math.floor(Math.random() * (250 - 90)) + 90;
     let indexActual = indexAleatori;
     let movContador = 0;
     let tempsInterval = 50;
 
-    const moverPelota = setInterval(() => {
+    const moverPelota = () => {
         ruletaCells[indexActual].querySelector('img').remove();
 
         indexActual = (indexActual - 1 + ruletaCells.length) % ruletaCells.length;
@@ -121,22 +156,62 @@ function iniciarAnimacionRuleta(ruletaCells, indexAleatori, pelotaImg) {
 
         movContador++;
 
-        if (movContador >= numMovimientos) {
-            clearInterval(moverPelota);
-            verificarGanador(ruletaCells[indexActual]);
+        if (movContador >= Math.floor(numMovimientos * 0.8)) {
+            tempsInterval += 12; 
         }
-    }, tempsInterval);
+        
+        if (movContador >= numMovimientos) {
+            DineroLabelAposta.textContent = "0";
+
+            guardarNumeroGanador(ruletaCells[indexActual]); 
+            comprobarGanador(); 
+
+            setTimeout(() => {
+                const imgFinal = ruletaCells[indexActual].querySelector('img');
+                if (imgFinal) {
+                    imgFinal.remove();
+                }
+            }, 5000);
+        } else {
+            setTimeout(moverPelota, tempsInterval);
+        }
+    };
+        
+    setTimeout(moverPelota, tempsInterval);
 }
 
-//Funció 9 - Verificar el guanyador
-function verificarGanador(casillaFinal) {
-    const fichaEnCasilla = casillaFinal.querySelector('img.fichaEnCelda');
-    if (fichaEnCasilla) {
-        alert('Felicitats, has guanyat');
-    }
+// Función 10 - Guardar el número ganador
+function guardarNumeroGanador(celda) {
+    numeroGanador = celda.textContent.trim();
 }
 
-//Funció 10
+// Función 11 - Comprobar si hay un ganador
+function comprobarGanador() {
+    if (apuestas.includes(numeroGanador)) {
+        alert("Felicitats, has guanyat!");
+        const ruletaCells = document.querySelectorAll('.ruletaTable td');
+        ruletaCells.forEach(cell => {
+        const pelota = cell.querySelector('img.pelota');
+        if (pelota) pelota.remove();
+    });
+    } 
+    
+     // Eliminar todas las fichas apostadas en el tablero de la ruleta
+     const ruletaCellsAposta = document.querySelectorAll('.ruletaTablero td');
+     ruletaCellsAposta.forEach(cell => {
+         const ficha = cell.querySelector('img.fichaEnCelda');
+         if (ficha) {
+             ficha.remove();// Eliminar la ficha de la celda
+         }
+     });
+ 
+     // Limpiar las apuestas (también podría ser parte de la lógica de reset)
+     apuestas = [];
+     DineroLabelAposta.textContent = "0";
+ }
+
+
+// Función 12 - Inicializar el juego
 document.addEventListener('DOMContentLoaded', () => {
     const fichaValores = {
         "F1": 0.10,
